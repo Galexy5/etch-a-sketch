@@ -6,68 +6,57 @@
 	<title>Etch a Sketch</title>
 </head>
 <body>
-	<button onclick="blackButton()">Black</button>
-	<button onclick="redButton()">Red</button>
-	<button onclick="resetButton()">Reset</button>
+	<button id="blackButton">Black</button> 
+	<button id="redButton">Red</button>		
+	<button id="resetButton">Reset</button>  
 </br>
 
 <div id="container"></div>
 
 </body>
 <script type="text/javascript">
-const container=document.getElementById("container");
-let size=16;
 
-function createGrid(rows,cols)
-{
 
-	container.style.setProperty('--grid-rows', rows);
-	container.style.setProperty('--grid-cols', cols);
-	for (c=0; c<(rows*cols); c++)
-	{
-		let cell=document.createElement("div");
-		container.appendChild(cell).className="grid-item";
-	}
 
-}
 
-container.addEventListener("mouseover", paint);
-
+const container = document.querySelector("#container");
+const resetBtn = document.querySelector("#resetButton");
+const blBtn=document.querySelector("#blackButton");
+const redBtn=document.querySelector("#redButton");
 let color;
 
-function paint(e)
-{
-	e.target.style.backgroundColor=color;
-}
 
-function blackButton()
+
+blBtn.addEventListener("click", function()
 {
 	color="black";
-}
+});
 
-
-function redButton()
+redBtn.addEventListener("click", function()
 {
 	color="red";
+});
+
+
+
+resetBtn.addEventListener("click", function () {
+  container.textContent = "";
+  resize = prompt("Enter number for new grid size");
+  makeGrid(resize, resize);
+});
+
+function makeGrid(rows = 16, cols = 16) {
+  container.style.setProperty("--grid-rows", rows);
+  container.style.setProperty("--grid-cols", cols);
+  for (cells = 0; cells < rows * cols; cells++) {
+    let cell = document.createElement("div");
+    cell.addEventListener("mouseover", function () {
+      cell.style.backgroundColor = color;
+    });
+    container.appendChild(cell);
+  }
 }
 
-
-function resetButton()
-{
-	let i;
-	for (i=0;i<size*size; i++)
-	{
-		document.getElementsByClassName("grid-item")[i].removeAttribute("style");
-	}
-	size=prompt("Enter the number you want to resize your sketch pad...Example: 16=16x16 sketch pad");
-
-	if (size!=null)
-	{
-		container.innerHTML='';
-		createGrid(size,size);
-	}
-}
-
-createGrid(size,size);
+makeGrid();
 </script>
 </html>
