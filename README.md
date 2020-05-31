@@ -1,1 +1,2 @@
 # etch-a-sketch
+For The Odin Project curriculum
